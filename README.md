@@ -1,7 +1,11 @@
 # Paperwall
 
-In this project I have built a web app using VueJS,
-Tailwind CSS, and data is retrieved from Unsplah API. 
+In this project I have built a web app for downloading High Definition Wallpapers.
+I have used 
+* VueJS,
+* Tailwind CSS, 
+***
+and data is retrieved from [Unsplah](https://unsplash.com) **API**. 
 
 
 ## Project setup

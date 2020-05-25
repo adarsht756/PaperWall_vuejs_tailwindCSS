@@ -2,11 +2,11 @@
     <div id="app">
         <transition name="slideDown">
             <div v-show="networkProb"
-                 class="px-5 py-3 shadow-2xl justify-between items-center flex font-light text-white mt-40 top-0 fixed z-40"
-                 style="left: 40%;background: #232323">
+                 class="px-5 py-3 shadow-2xl justify-between items-center flex font-light text-white mb-20 ml-10 bottom-0 fixed z-40"
+                 style="background: #232323">
                 <div>
                     You are having network Problem
-                    Please reload page.😋
+                    Please reload page.
                 </div>
                 <button @click="networkProb = false" class="focus:outline-none">
                     <svg class="h-5 w-5 ml-3" fill="white" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
@@ -25,20 +25,23 @@
                     <h1 class="text-2xl gradient-text font-semibold">PaperWall</h1>
                     <div class="mt-5 pr-0 md:pr-10">
                         <div class="relative">
-                            <button class="absolute flex inset-y-0 left-0 pl-3 items-center" @click="searchPhoto">
+                            <button class="absolute flex inset-y-0 left-0 pl-3 items-center focus:outline-none"
+                                    @click="searchPhoto,sideBar=false">
                                 <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none">
                                     <path stroke="black" stroke-width="2" stroke-linecap="round"
                                           d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                             </button>
-                            <input v-model="searchKey"
-                                   class="block w-48 md:w-full rounded-full shadow-lg font-semibold border border-gray-700 pl-10 pr-4 py-2 text-sm placeholder-black"
+                            <input v-model="searchKey" @keyup.enter="searchPhoto(),sideBar=false"
+                                   class="block w-48 md:w-full border border-gray-700 pl-10 pr-4 py-2 text-sm text-black rounded-full shadow-lg font-semibold placeholder-black focus:outline-none"
                                    placeholder="Search">
                         </div>
                     </div>
                     <div class="flex flex-col mt-5">
                         <div class="leading-8" v-for="category in categories" :key="category">
-                            <button class="focus:outline-none" @click="searchCategory(category)">{{ category }}</button>
+                            <button class="focus:outline-none" @click="searchCategory(category),sideBar = false">{{
+                                category }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -50,11 +53,12 @@
 
             <div class="hidden lg:flex items-center justify-center ml-20">
                 <div class="mx-3" v-for="category in categories" :key="category">
-                    <button @click="searchCategory(category)">{{ category }}</button>
+                    <button class="focus:outline-none" @click="searchCategory(category)">{{ category }}</button>
                 </div>
             </div>
 
-            <button @click="sideBar = !sideBar" class="text-gray-600 absolute mr-5 right-0 lg:hidden">
+            <button @click="sideBar = !sideBar"
+                    class="text-gray-600 absolute mr-5 right-0 lg:hidden focus:outline-none">
                 <svg class="h-6 w-6" aria-hidden="true" fill="currentColor" focusable="false"
                      data-prefix="fad" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 448 512">
@@ -101,10 +105,11 @@
         <div class="flex flex-col md:flex-row mt-10 container mx-auto">
 
             <div class="flex flex-col">
-                <div v-for="result in results.slice(0,7)" :key="result" class="m-3 conta bg-black relative">
-                    <div class="overflow-hidden" :style="{ height: ((400/result.width)*result.height)+'px' }">
+                <div v-for="result in results.slice(0,7)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
+                    <div class="overflow-hidden">
+<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                             :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
+                                   :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
                     </div>
                     <div>
                         <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10"
@@ -118,8 +123,9 @@
                 </div>
             </div>
             <div class="flex flex-col">
-                <div v-for="result in results.slice(7,14)" :key="result" class="m-3 conta bg-black relative">
-                    <div class="overflow-hidden" :style="{ height: ((400/result.width)*result.height)+'px' }">
+                <div v-for="result in results.slice(7,14)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
+                    <div class="overflow-hidden">
+<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
                                    :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
                     </div>
@@ -136,8 +142,9 @@
             </div>
 
             <div class="flex flex-col">
-                <div v-for="result in results.slice(14)" :key="result" class="m-3 conta bg-black relative">
-                    <div class="overflow-hidden" :style="{ height: ((400/result.width)*result.height)+'px' }">
+                <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
+                    <div class="overflow-hidden">
+<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
                                    :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
                     </div>
@@ -157,7 +164,7 @@
 
         <div class="flex mx-auto justify-center text-center my-5">
             <div v-for="i in 10" class="text-white" :key="i">
-                <button class="border font-bold md:rounded-tr-full md:rounded-bl-full md:px-10 -ml-1 lg:-ml-8 px-3 py-3 md:py-3 pagination_button transition-colors duration-300"
+                <button class="border font-bold md:rounded-tr-full md:rounded-bl-full md:px-10 -ml-1 lg:-ml-8 px-3 py-3 md:py-3 pagination_button transition-colors duration-300 focus:outline-none"
                         @click="goToPage(i)">
                     {{ i }}
                 </button>
@@ -187,8 +194,9 @@
     });
 
     import imageComp from './components/image.vue';
+
     export default {
-        components:{
+        components: {
             imageComp
         },
         data() {
@@ -287,10 +295,6 @@
 </script>
 
 <style>
-    * {
-        -webkit-tap-highlight-color: transparent;
-        scroll-behavior: smooth;
-    }
 
     #search {
         width: 8cm;
@@ -361,11 +365,6 @@
         opacity: 1;
     }
 
-    button:focus,
-    input:focus {
-        outline: none;
-    }
-
     .pagination_button {
         background-color: #3f3f3f;
     }
@@ -388,26 +387,26 @@
         transform: translateX(-100%);
     }
 
-    .slideRight-enter-active {
+    .slideRight-enter-active,
+    .slideRight-leave-active {
         transition: all .3s ease-in;
     }
 
-    .slideRight-leave {
-        opacity: 0;
+    .slideRight-leave-to {
         transform: translateX(-100%);
     }
 
     .slideDown-enter {
         opacity: 0;
-        transform: translateY(-100%);
+        transform: translateY(100%);
     }
 
-    .slideDown-enter-active {
+    .slideDown-enter-active,
+    .slideDown-leave-active {
         transition: all .3s ease-in;
     }
 
-    .slideDown-leave {
-        opacity: 0;
-        transform: translateY(-100%);
+    .slideDown-leave-to {
+        transform: translateY(100%);
     }
 </style>
