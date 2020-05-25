@@ -1,4 +1,8 @@
-# real-world-vue
+# Paperwall
+
+In this project I have built a web app using VueJS,
+Tailwind CSS, and data is retrieved from Unsplah API. 
+
 
 ## Project setup
 ```
