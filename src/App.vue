@@ -1,9 +1,14 @@
+<!--Before using this app please generate your personal API access key
+    for making API calls. You can generate it from https://unsplash.com/ .
+    Again, kindly remove key used in this component and generate your API access key !!
+-->
+
 <template>
     <div id="app">
         <transition name="slideDown">
             <div v-show="networkProb"
-                 class="px-5 py-3 shadow-2xl justify-between items-center flex font-light text-white mb-20 ml-10 bottom-0 fixed z-40"
-                 style="background: #232323">
+                 class="px-5 py-3 shadow-2xl justify-between items-center hidden font-light text-white mb-20 ml-4 md:ml-10 bottom-0 fixed z-40"
+                 style="background: #232323" id="prob">
                 <div>
                     You are having network Problem
                     Please reload page.
@@ -48,7 +53,7 @@
             </div>
         </transition>
 
-        <nav class="flex flex-row justify-between md:justify-start h-16 bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
+        <nav class="flex flex-row justify-between md:justify-start h-auto bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
             <h1 class="text-2xl md:text-3xl gradient-text font-semibold">PaperWall</h1>
 
             <div class="hidden lg:flex items-center justify-center ml-20">
@@ -73,16 +78,16 @@
                 </svg>
             </button>
 
-            <div class="hidden lg:block absolute right-0 pr-0 md:pr-10">
+            <div class="hidden lg:block absolute right-0 pr-0 md:pr-6">
                 <button class="ml-6">
-                    <img class="h-9 border h-10 rounded-full object-cover"
+                    <img class="h-8 border h-8 rounded-full object-cover"
                          src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=60"
                          alt="">
                 </button>
             </div>
         </nav>
 
-        <div class="relative bg-gray-200 mt-16" id="carousel">
+        <div class="relative bg-gray-200 mt-16 flex flex-col" id="carousel">
 
             <div class="absolute text-white flex flex-col ml-4 md:ml-20 lg:ml-40 xl:ml-56">
                 <h2 class="font-semibold mt-40 text-4xl">PaperWall</h2>
@@ -100,42 +105,62 @@
                            placeholder="Search high resolution images...">
                 </div>
             </div>
+            <div class="bottom-0 absolute text-white right-0 mr-2 md:mr-4 italic text-xs md:text-sm">
+                <span>All the photos are retrieved from <a target="_blank"
+                                                           :href=unsplashLink+appNameReferral>Unsplash</a></span>
+            </div>
         </div>
         <div class="w-full mx-auto bg-gray-500 mt-10" style="width: 95%;height: 1px"></div>
         <div class="flex flex-col md:flex-row mt-10 container mx-auto">
 
             <div class="flex flex-col">
-                <div v-for="result in results.slice(0,7)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
+                <div v-for="result in results.slice(0,7)" :key="result"
+                     class="md:m-3 mx-0 my-3 conta bg-black relative">
                     <div class="overflow-hidden">
-<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
+                        <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
+                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
                     </div>
                     <div>
-                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10"
+                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
                                 @click="download(result.links.download_location)"> Download
                         </button>
-                        <div class="absolute inline-flex items-center z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
-                            <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
-                            <span class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }}</span>
+                        <div class="absolute flex justify-between items-center w-full z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
+                            <div class="flex items-center">
+                                <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
+                                <a target="_blank" :href="result.user.links.html+appNameReferral">
+                                    <span
+                                            class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }} </span>
+                                </a>
+                            </div>
+                            <a target="_blank" :href=unsplashLink+appNameReferral><span
+                                    class="text-sm font-hairline text-white mr-4">Unsplash</span></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="flex flex-col">
-                <div v-for="result in results.slice(7,14)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
+                <div v-for="result in results.slice(7,14)" :key="result"
+                     class="md:m-3 mx-0 my-3 conta bg-black relative">
                     <div class="overflow-hidden">
-<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
+                        <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
+                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
                     </div>
                     <div>
-                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10"
+                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
                                 @click="download(result.links.download_location)"> Download
                         </button>
-                        <div class="absolute inline-flex items-center z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
-                            <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
-                            <span class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }}</span>
+                        <div class="absolute flex justify-between items-center w-full z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
+                            <div class="flex items-center">
+                                <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
+                                <a target="_blank" :href="result.user.links.html+appNameReferral">
+                                    <span
+                                            class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }} </span>
+                                </a>
+                            </div>
+                            <a target="_blank" :href=unsplashLink+appNameReferral><span
+                                    class="text-sm font-hairline text-white mr-4">Unsplash</span></a>
                         </div>
                     </div>
                 </div>
@@ -144,17 +169,24 @@
             <div class="flex flex-col">
                 <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
                     <div class="overflow-hidden">
-<!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
+                        <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :altDescription="result.alt_description"></imageComp>
+                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
                     </div>
                     <div>
-                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10"
+                        <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
                                 @click="download(result.links.download_location)"> Download
                         </button>
-                        <div class="absolute inline-flex items-center z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
-                            <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
-                            <span class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }}</span>
+                        <div class="absolute flex justify-between items-center w-full z-10 -mt-10 profile_info opacity-0 transition-opacity duration-500">
+                            <div class="flex items-center">
+                                <img class="rounded-full mx-2" :src="result.user.profile_image.small" alt="">
+                                <a target="_blank" :href="result.user.links.html+appNameReferral">
+                                    <span
+                                            class="text-white"> {{ result.user.first_name }} {{ result.user.last_name }} </span>
+                                </a>
+                            </div>
+                            <a target="_blank" :href=unsplashLink+appNameReferral><span
+                                    class="text-sm font-hairline text-white mr-4">Unsplash</span></a>
                         </div>
                     </div>
                 </div>
@@ -206,9 +238,11 @@
                 searchedPhoto: false,
                 searchedCategory: false,
                 categorySearched: " ",
-                networkProb: false,
+                networkProb: true,
                 source: "",
-                altDescription: "",
+                description: "",
+                appNameReferral: "?utm_source=FIZZ&utm_medium=referral",
+                unsplashLink: "https://unsplash.com/",
                 // randomPhoto: { },
                 searchKey: "",
                 categories: ["Nature", "Wallpapers", "Textures & Patterns", "People",
@@ -217,7 +251,7 @@
         },
         methods: {
             download(a) {
-                apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU")
+                apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral")
                     .then(response => {
                         window.open(response.data.url, "_blank");
 
@@ -228,7 +262,7 @@
                 document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
                 this.searchedPhoto = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&query=" + this.searchKey + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
                     .then(response => {
                         this.results = response.data.results;
                     });
@@ -239,7 +273,7 @@
                 document.documentElement.scrollTop = 572;
                 this.searchedPhoto = false;
                 this.searchedCategory = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&query=" + category + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
                     .then(response => {
                         console.log("API called Successfully");
                         this.results = response.data.results;
@@ -251,50 +285,48 @@
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 if (this.searchedPhoto) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&query=" + this.searchKey + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.searchKey)
                             this.results = response.data.results;
                         });
                 } else if (this.searchedCategory) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.categorySearched)
                             this.results = response.data.results;
                         });
                 } else {
-                    apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&per_page=21&page=" + i)
+                    apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
                         .then(response => {
                             this.results = response.data;
                         });
                 }
-            }
+            },
         },
         mounted() {
-            apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&per_page=21")
+            apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
                 .then(response => {
                     this.results = response.data;
                     console.log(this.results);
                 })
                 .catch(error => {
-                    NProgress.done();
                     console.log("error" + error);
-                    this.networkProb = true;
+                    setTimeout(function () {
+                        NProgress.done();
+                        document.getElementById("prob").style.display = 'flex';
+                    }, 5000)
                 })
 
-            // Get a random photo
-
-            // axios.get("https://api.unsplash.com/photos/random/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU")
-            //     .then(response => {
-            //         this.randomPhoto = response.data.urls.regular
-            //         console.log(response.data.urls.regular);
-            //
-            //     })
         }
     }
 </script>
 
 <style>
+    * {
+        -webkit-tap-highlight-color: transparent;
+        scroll-behavior: smooth;
+    }
 
     #search {
         width: 8cm;

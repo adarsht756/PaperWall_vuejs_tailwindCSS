@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="source" :alt="altDescription">
+        <img :src="source" :alt="description">
     </div>
 </template>
 
@@ -11,9 +11,9 @@
                 type: String,
                 required: true
             },
-            altDescription: {
+            description: {
                 type: String,
-                required: true
+                required: false
             }
         },
         name: "imageComp",
