@@ -27,7 +27,7 @@
             <div v-show="sideBar"
                  class="flex lg:hidden flex-col min-h-screen fixed overflow-y-scroll left-0 top-0 z-50 bg-black text-white w-56 items-center text-center">
                 <div class="mt-6">
-                    <h1 class="text-2xl gradient-text font-semibold">PaperWall</h1>
+                    <button class="text-2xl gradient-text font-semibold focus:outline-none" @click="getRandomPhotos(),sideBar=false">PaperWall</button>
                     <div class="mt-5 pr-0 md:pr-10">
                         <div class="relative">
                             <button class="absolute flex inset-y-0 left-0 pl-3 items-center focus:outline-none"
@@ -53,8 +53,8 @@
             </div>
         </transition>
 
-        <nav class="flex flex-row justify-between md:justify-start h-auto bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
-            <h1 class="text-2xl md:text-3xl gradient-text font-semibold">PaperWall</h1>
+        <nav class="flex flex-row justify-between md:justify-start h-16 md:h-auto bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
+            <button class="text-2xl md:text-3xl gradient-text font-semibold focus:outline-none" @click="getRandomPhotos">PaperWall</button>
 
             <div class="hidden lg:flex items-center justify-center ml-20">
                 <div class="mx-3" v-for="category in categories" :key="category">
@@ -251,7 +251,7 @@
         },
         methods: {
             download(a) {
-                apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral")
+                apiclient.get(a + "?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral")
                     .then(response => {
                         window.open(response.data.url, "_blank");
 
@@ -262,7 +262,7 @@
                 document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
                 this.searchedPhoto = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
                     .then(response => {
                         this.results = response.data.results;
                     });
@@ -273,7 +273,7 @@
                 document.documentElement.scrollTop = 572;
                 this.searchedPhoto = false;
                 this.searchedCategory = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
                     .then(response => {
                         console.log("API called Successfully");
                         this.results = response.data.results;
@@ -285,27 +285,36 @@
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 if (this.searchedPhoto) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.searchKey)
                             this.results = response.data.results;
                         });
                 } else if (this.searchedCategory) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.categorySearched)
                             this.results = response.data.results;
                         });
                 } else {
-                    apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
+                    apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
                         .then(response => {
                             this.results = response.data;
                         });
                 }
             },
+            getRandomPhotos(){
+                document.body.scrollTop = 283.20001220703125;
+                document.documentElement.scrollTop = 283.20001220703125;
+                apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21")
+                    .then(response => {
+                        this.results = response.data;
+                        console.log(this.results);
+                    })
+            }
         },
         mounted() {
-            apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
+            apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21")
                 .then(response => {
                     this.results = response.data;
                     console.log(this.results);
