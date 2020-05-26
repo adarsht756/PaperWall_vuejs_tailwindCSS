@@ -210,7 +210,7 @@
 
     const apiclient = axios.create({
         baseURL: 'http://localhost:8080/',
-        timeout: 5000,
+        timeout: 10000,
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
@@ -251,13 +251,21 @@
         },
         methods: {
             download(a) {
+                this.networkProb = true;
                 apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral")
                     .then(response => {
                         window.open(response.data.url, "_blank");
-
+                    })
+                    .catch(error => {
+                        console.log("error" + error);
+                        setTimeout(function () {
+                            NProgress.done();
+                            document.getElementById("prob").style.display = 'flex';
+                        }, 10000)
                     })
             },
             searchPhoto() {
+                this.networkProb = true;
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
@@ -265,9 +273,17 @@
                 apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
                     .then(response => {
                         this.results = response.data.results;
+                    })
+                    .catch(error => {
+                        console.log("error" + error);
+                        setTimeout(function () {
+                            NProgress.done();
+                            document.getElementById("prob").style.display = 'flex';
+                        }, 10000)
                     });
             },
             searchCategory(category) {
+                this.networkProb = true;
                 this.categorySearched = category;
                 document.body.scrollTop = 572;
                 document.documentElement.scrollTop = 572;
@@ -278,10 +294,18 @@
                         console.log("API called Successfully");
                         this.results = response.data.results;
                         this.searchKey = null;
+                    })
+                    .catch(error => {
+                        console.log("error" + error);
+                        setTimeout(function () {
+                            NProgress.done();
+                            document.getElementById("prob").style.display = 'flex';
+                        }, 10000)
                     });
 
             },
             goToPage(i) {
+                this.networkProb = true;
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 if (this.searchedPhoto) {
@@ -289,27 +313,56 @@
                         .then(response => {
                             console.log(this.searchKey)
                             this.results = response.data.results;
+                        })
+                        .catch(error => {
+                            console.log("error" + error);
+                            setTimeout(function () {
+                                NProgress.done();
+                                document.getElementById("prob").style.display = 'flex';
+                            }, 10000)
                         });
                 } else if (this.searchedCategory) {
                     apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.categorySearched)
                             this.results = response.data.results;
+                        })
+                        .catch(error => {
+                            console.log("error" + error);
+                            setTimeout(function () {
+                                NProgress.done();
+                                document.getElementById("prob").style.display = 'flex';
+                            }, 10000)
                         });
                 } else {
                     apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
                         .then(response => {
                             this.results = response.data;
+                        })
+                        .catch(error => {
+                            console.log("error" + error);
+                            setTimeout(function () {
+                                NProgress.done();
+                                document.getElementById("prob").style.display = 'flex';
+                            }, 10000)
                         });
                 }
             },
             getRandomPhotos(){
+                this.networkProb = true;
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
                     .then(response => {
                         this.results = response.data;
                         console.log(this.results);
+                    })
+                    .catch(error => {
+                        console.log("error" + error);
+                        setTimeout(function () {
+                            NProgress.done();
+                            document.getElementById("prob").style.display = 'flex';
+                        }, 10000)
                     })
             }
         },
@@ -324,7 +377,7 @@
                     setTimeout(function () {
                         NProgress.done();
                         document.getElementById("prob").style.display = 'flex';
-                    }, 5000)
+                    }, 10000)
                 })
 
         }
