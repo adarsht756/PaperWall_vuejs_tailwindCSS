@@ -251,7 +251,7 @@
         },
         methods: {
             download(a) {
-                apiclient.get(a + "?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral")
+                apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral")
                     .then(response => {
                         window.open(response.data.url, "_blank");
 
@@ -262,7 +262,7 @@
                 document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
                 this.searchedPhoto = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
                     .then(response => {
                         this.results = response.data.results;
                     });
@@ -273,7 +273,7 @@
                 document.documentElement.scrollTop = 572;
                 this.searchedPhoto = false;
                 this.searchedCategory = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
                     .then(response => {
                         console.log("API called Successfully");
                         this.results = response.data.results;
@@ -285,19 +285,19 @@
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 if (this.searchedPhoto) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.searchKey)
                             this.results = response.data.results;
                         });
                 } else if (this.searchedCategory) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.categorySearched)
                             this.results = response.data.results;
                         });
                 } else {
-                    apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
+                    apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
                         .then(response => {
                             this.results = response.data;
                         });
@@ -306,7 +306,7 @@
             getRandomPhotos(){
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
-                apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21")
+                apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
                     .then(response => {
                         this.results = response.data;
                         console.log(this.results);
@@ -314,7 +314,7 @@
             }
         },
         mounted() {
-            apiclient.get("https://api.unsplash.com/photos/?client_id=47bIW_EN0JicBYu6g3WjKxm05cyyspzPuL-ulaU3Nlo&utm_source=FIZZ&utm_medium=referral&per_page=21")
+            apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
                 .then(response => {
                     this.results = response.data;
                     console.log(this.results);
