@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="source" :alt="description">
+        <img :src="source" :alt="description" :id="sourceId">
     </div>
 </template>
 
@@ -12,6 +12,10 @@
                 required: true
             },
             description: {
+                type: String,
+                required: false
+            },
+            sourceId: {
                 type: String,
                 required: false
             }

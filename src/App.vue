@@ -27,7 +27,9 @@
             <div v-show="sideBar"
                  class="flex lg:hidden flex-col min-h-screen fixed overflow-y-scroll left-0 top-0 z-50 bg-black text-white w-56 items-center text-center">
                 <div class="mt-6">
-                    <button class="text-2xl gradient-text font-semibold focus:outline-none" @click="getRandomPhotos(),sideBar=false">PaperWall</button>
+                    <button class="text-2xl gradient-text font-semibold focus:outline-none"
+                            @click="getRandomPhotos(),sideBar=false">PaperWall
+                    </button>
                     <div class="mt-5 pr-0 md:pr-10">
                         <div class="relative">
                             <button class="absolute flex inset-y-0 left-0 pl-3 items-center focus:outline-none"
@@ -54,7 +56,9 @@
         </transition>
 
         <nav class="flex flex-row justify-between md:justify-start h-16 md:h-auto bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
-            <button class="text-2xl md:text-3xl gradient-text font-semibold focus:outline-none" @click="getRandomPhotos">PaperWall</button>
+            <button class="text-2xl md:text-3xl gradient-text font-semibold focus:outline-none"
+                    @click="getRandomPhotos">PaperWall
+            </button>
 
             <div class="hidden lg:flex items-center justify-center ml-20">
                 <div class="mx-3" v-for="category in categories" :key="category">
@@ -91,8 +95,8 @@
 
             <div class="absolute text-white flex flex-col ml-4 md:ml-20 lg:ml-40 xl:ml-56">
                 <h2 class="font-semibold mt-40 text-4xl">PaperWall</h2>
-                <p class="text-xl">The internet’s source of freely usable images. <br>
-                    Powered by creators everywhere.</p>
+                <p class="text-xl">The online platform of commercially free images. <br>
+                    Captured by best photographer's with their creation.</p>
                 <div class="relative mt-10">
                     <button class="absolute flex inset-y-0 left-0 pl-3 items-center" @click="searchPhoto">
                         <svg class="h-6 w-6 text-gray-600" viewBox="0 0 24 24" fill="none">
@@ -115,11 +119,14 @@
 
             <div class="flex flex-col">
                 <div v-for="result in results.slice(0,7)" :key="result"
-                     class="md:m-3 mx-0 my-3 conta bg-black relative">
-                    <div class="overflow-hidden">
+                     class="md:m-3 mx-0 my-3 relative conta">
+                    <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
+                                   :sourceId="result.id"
+                                   :source="result.urls.regular"
+                                   :description="result.alt_description">
+                        </imageComp>
                     </div>
                     <div>
                         <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
@@ -141,11 +148,12 @@
             </div>
             <div class="flex flex-col">
                 <div v-for="result in results.slice(7,14)" :key="result"
-                     class="md:m-3 mx-0 my-3 conta bg-black relative">
-                    <div class="overflow-hidden">
+                     class="md:m-3 mx-0 my-3 conta relative">
+                    <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
+                                   :sourceId="result.id" :source="result.urls.regular" :description="result.alt_description">
+                        </imageComp>
                     </div>
                     <div>
                         <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
@@ -167,11 +175,12 @@
             </div>
 
             <div class="flex flex-col">
-                <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta bg-black relative">
-                    <div class="overflow-hidden">
+                <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta relative">
+                    <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :source="result.urls.small" :description="result.alt_description"></imageComp>
+                                   :sourceId="result.id" :source="result.urls.regular" :description="result.alt_description">
+                        </imageComp>
                     </div>
                     <div>
                         <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
@@ -240,8 +249,9 @@
                 categorySearched: " ",
                 networkProb: true,
                 source: "",
+                sourceId: "",
                 description: "",
-                appNameReferral: "?utm_source=FIZZ&utm_medium=referral",
+                appNameReferral: "?utm_source=Paperwall&utm_medium=referral",
                 unsplashLink: "https://unsplash.com/",
                 // randomPhoto: { },
                 searchKey: "",
@@ -252,7 +262,7 @@
         methods: {
             download(a) {
                 this.networkProb = true;
-                apiclient.get(a + "?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral")
+                apiclient.get(a + "?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral")
                     .then(response => {
                         window.open(response.data.url, "_blank");
                     })
@@ -270,7 +280,7 @@
                 document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
                 this.searchedPhoto = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
                     .then(response => {
                         this.results = response.data.results;
                     })
@@ -289,7 +299,7 @@
                 document.documentElement.scrollTop = 572;
                 this.searchedPhoto = false;
                 this.searchedCategory = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + category + "&per_page=21")
+                apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + category + "&per_page=21")
                     .then(response => {
                         console.log("API called Successfully");
                         this.results = response.data.results;
@@ -309,7 +319,7 @@
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 if (this.searchedPhoto) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + this.searchKey + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.searchKey)
                             this.results = response.data.results;
@@ -322,7 +332,7 @@
                             }, 10000)
                         });
                 } else if (this.searchedCategory) {
-                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + this.categorySearched + "&page=" + i + "&per_page=21")
                         .then(response => {
                             console.log(this.categorySearched)
                             this.results = response.data.results;
@@ -335,7 +345,7 @@
                             }, 10000)
                         });
                 } else {
-                    apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21&page=" + i)
+                    apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21&page=" + i)
                         .then(response => {
                             this.results = response.data;
                         })
@@ -348,11 +358,11 @@
                         });
                 }
             },
-            getRandomPhotos(){
+            getRandomPhotos() {
                 this.networkProb = true;
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
-                apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
+                apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
                     .then(response => {
                         this.results = response.data;
                         console.log(this.results);
@@ -364,10 +374,10 @@
                             document.getElementById("prob").style.display = 'flex';
                         }, 10000)
                     })
-            }
+            },
         },
         mounted() {
-            apiclient.get("https://api.unsplash.com/photos/?client_id=J3fTdcbKTEm-IUjcWz8MseJaQEtCWEilFo8ODyEuVrU&utm_source=FIZZ&utm_medium=referral&per_page=21")
+            apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
                 .then(response => {
                     this.results = response.data;
                     console.log(this.results);
