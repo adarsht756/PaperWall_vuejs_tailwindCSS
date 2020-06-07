@@ -360,6 +360,8 @@
             },
             getRandomPhotos() {
                 this.networkProb = true;
+                this.searchedCategory = false;
+                this.searchedPhoto = false;
                 document.body.scrollTop = 283.20001220703125;
                 document.documentElement.scrollTop = 283.20001220703125;
                 apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
@@ -389,7 +391,6 @@
                         document.getElementById("prob").style.display = 'flex';
                     }, 10000)
                 })
-
         }
     }
 </script>
