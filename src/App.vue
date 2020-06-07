@@ -115,9 +115,9 @@
             </div>
         </div>
         <div class="w-full mx-auto bg-gray-500 mt-10" style="width: 95%;height: 1px"></div>
-        <div class="flex flex-col md:flex-row mt-10 container mx-auto">
+        <div class="flex flex-col md:flex-row mt-10 mb-5 container mx-auto">
 
-            <div class="flex flex-col">
+            <div class="flex flex-col mx-auto">
                 <div v-for="result in results.slice(0,7)" :key="result"
                      class="md:m-3 mx-0 my-3 relative conta">
                     <div class="overflow-hidden" :style="{ background: result.color }">
@@ -146,7 +146,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col mx-auto">
                 <div v-for="result in results.slice(7,14)" :key="result"
                      class="md:m-3 mx-0 my-3 conta relative">
                     <div class="overflow-hidden" :style="{ background: result.color }">
@@ -174,7 +174,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col mx-auto">
                 <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta relative">
                     <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
@@ -203,7 +203,7 @@
         </div>
 
 
-        <div class="flex mx-auto justify-center text-center my-5">
+        <div class="flex mx-auto justify-center text-center mb-5" v-if="page">
             <div v-for="i in 10" class="text-white" :key="i">
                 <button class="border font-bold md:rounded-tr-full md:rounded-bl-full md:px-10 -ml-1 lg:-ml-8 px-3 py-3 md:py-3 pagination_button transition-colors duration-300 focus:outline-none"
                         @click="goToPage(i)">
@@ -377,6 +377,14 @@
                         }, 10000)
                     })
             },
+        },
+        computed: {
+          page(){
+              if (this.results.length >=21){
+                  return true;
+              }
+              else return false;
+          }
         },
         mounted() {
             apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
