@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="source" :alt="description" :id="sourceId" style="max-width: 402.667px;">
+        <img :src="source" :alt="description" :id="sourceId">
     </div>
 </template>
 
