@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        props:{
+        props: {
             source: {
                 type: String,
                 required: true
@@ -26,4 +26,21 @@
 
 <style scoped>
 
+    @media screen and (min-width: 1024px) {
+        img {
+            width: 402.667px;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        img {
+            width: 360px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        img {
+            width: 402.667px;
+        }
+    }
 </style>
