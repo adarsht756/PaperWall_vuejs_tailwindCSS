@@ -24,6 +24,7 @@
             </div>
         </transition>
         <transition name="slideRight">
+
             <div v-show="sideBar"
                  class="flex lg:hidden flex-col min-h-screen fixed overflow-y-scroll left-0 top-0 z-50 bg-black text-white w-56 items-center text-center">
                 <div class="mt-6">
@@ -152,7 +153,8 @@
                     <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :sourceId="result.id" :source="result.urls.regular" :description="result.alt_description">
+                                   :sourceId="result.id" :source="result.urls.regular"
+                                   :description="result.alt_description">
                         </imageComp>
                     </div>
                     <div>
@@ -179,7 +181,8 @@
                     <div class="overflow-hidden" :style="{ background: result.color }">
                         <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                         <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
-                                   :sourceId="result.id" :source="result.urls.regular" :description="result.alt_description">
+                                   :sourceId="result.id" :source="result.urls.regular"
+                                   :description="result.alt_description">
                         </imageComp>
                     </div>
                     <div>
@@ -277,20 +280,21 @@
             searchPhoto() {
                 this.networkProb = true;
                 document.body.scrollTop = 283.20001220703125;
-                document.documentElement.scrollTop = 283.20001220703125;
                 this.searchedCategory = false
                 this.searchedPhoto = true;
-                apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
-                    .then(response => {
-                        this.results = response.data.results;
-                    })
-                    .catch(error => {
-                        console.log("error" + error);
-                        setTimeout(function () {
-                            NProgress.done();
-                            document.getElementById("prob").style.display = 'flex';
-                        }, 10000)
-                    });
+                if (this.searchKey !== "") {
+                    apiclient.get("https://api.unsplash.com/search/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&query=" + this.searchKey + "&per_page=21")
+                        .then(response => {
+                            this.results = response.data.results;
+                        })
+                        .catch(error => {
+                            console.log("error" + error);
+                            setTimeout(function () {
+                                NProgress.done();
+                                document.getElementById("prob").style.display = 'flex';
+                            }, 10000)
+                        });
+                }
             },
             searchCategory(category) {
                 this.networkProb = true;
@@ -379,12 +383,11 @@
             },
         },
         computed: {
-          page(){
-              if (this.results.length >=21){
-                  return true;
-              }
-              else return false;
-          }
+            page() {
+                if (this.results.length >= 21) {
+                    return true;
+                } else return false;
+            }
         },
         mounted() {
             apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
