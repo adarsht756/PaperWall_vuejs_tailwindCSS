@@ -6,4 +6,7 @@ module.exports = {
     tailwindcss,
     autoprefixer,
   ],
+  variants: {
+    textColor: ['responsive', 'hover', 'focus', 'group-hover','first','last','odd','even'],
+  },
 };

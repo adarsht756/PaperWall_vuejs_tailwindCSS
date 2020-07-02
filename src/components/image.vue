@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="source" :alt="description" :id="sourceId">
+        <img :src="source" :alt="description">
     </div>
 </template>
 
@@ -15,10 +15,6 @@
                 type: String,
                 required: false
             },
-            sourceId: {
-                type: String,
-                required: false
-            }
         },
         name: "imageComp",
     }
@@ -28,7 +24,7 @@
 
     @media screen and (min-width: 1024px) {
         img {
-            width: 402.667px;
+            width: 400.667px;
         }
     }
 
@@ -40,7 +36,7 @@
 
     @media screen and (max-width: 768px) {
         img {
-            width: 402.667px;
+            width: 400.667px;
         }
     }
 </style>

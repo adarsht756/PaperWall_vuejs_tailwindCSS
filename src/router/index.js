@@ -1,26 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomePage from "../views/HomePage";
-import TasksList from "../components/TasksList";
-import TaskBoard from "../components/TaskBoard";
+import homePage from "../views/homePage";
+import SignIn from "../components/SignIn";
+import SignUp from "../components/SignUp";
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/HomePage",
+    path: "/",
     name: "HomePage",
-    component: HomePage
+    component: homePage
   },
   {
-    path: "/Task/list",
-    name: "TasksList",
-    component: TasksList
+    path: "/SignIn",
+    name: "SignIn",
+    component: SignIn
   },
   {
-    path: "/Task/board",
-    name: "TaskBoard",
-    component: TaskBoard
-  },
+    path: "/SignUp",
+    name: "SignUp",
+    component: SignUp
+  }
 
 ];
 

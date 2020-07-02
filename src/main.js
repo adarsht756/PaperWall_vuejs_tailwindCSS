@@ -4,6 +4,7 @@ import store from "./store";
 import router from "./router";
 
 import("./assets/css/output.css");
+import("./assets/css/styles.css");
 import "nprogress/nprogress.css";
 
 Vue.config.productionTip = false;
