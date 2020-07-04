@@ -1,5 +1,5 @@
-import axios from 'axios';
-import NProgress from 'nprogress';
+import axios from "axios";
+import NProgress from "nprogress";
 import router from "../../router";
 
 export const state = {

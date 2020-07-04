@@ -2,7 +2,7 @@
 
 In this project I have built a web app for downloading High Definition Wallpapers.
 I have used 
-* VueJS,
+* VueJS, vuex, vue-router
 * Tailwind CSS, 
 ***
 and data is retrieved from [Unsplah](https://unsplash.com) **API**. 
