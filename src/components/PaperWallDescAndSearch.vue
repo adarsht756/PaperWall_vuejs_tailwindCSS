@@ -1,6 +1,5 @@
 <template>
     <div class="relative bg-gray-200 mt-16 flex flex-col" id="carousel">
-
         <div class="absolute text-white flex flex-col ml-4 md:ml-20 lg:ml-40 xl:ml-56">
             <h2 class="font-semibold mt-40 text-4xl">PaperWall</h2>
             <p class="text-xl">The online platform of commercially free images. <br>
@@ -36,10 +35,16 @@
         },
         methods: {
             searchPhoto() {
-                this.$emit('search-photo', this.searchKey, false, true)
-                this.searchKey = ""
+                let object = {
+                    searchedCategory: false,
+                    searchedPhoto: true,
+                    key: this.searchKey
+                }
+                this.$store.dispatch('searchPhoto', object)
+                    .then(() => {
+                        document.body.scrollTop = 283.20001220703125;
+                    })
             }
-        }
-
+        },
     }
 </script>

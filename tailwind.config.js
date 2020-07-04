@@ -7,6 +7,6 @@ module.exports = {
     autoprefixer,
   ],
   variants: {
-    textColor: ['responsive', 'hover', 'focus', 'group-hover','first','last','odd','even'],
+    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
   },
 };

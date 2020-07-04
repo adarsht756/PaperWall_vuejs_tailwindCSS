@@ -27,20 +27,26 @@
                 </div>
                 <div id="view">
                     <transition name="slideRightSignup" mode="out-in">
-                        <div class="px-10 mt-8 text-center">
-                            <input type="text" placeholder="Enter username" class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="userEmail" type="email" placeholder="Enter Email" class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="userPassword" type="password" placeholder="Enter password" class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
+                        <div class="px-10 mt-8 text-center flex flex-col">
+                            <input type="text" placeholder="Enter username"
+                                   class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
+                            <input v-model="user.email" type="email" placeholder="Enter Email"
+                                   class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
+                            <input v-model="user.password" type="password" placeholder="Enter password"
+                                   class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
 
                             <div v-show="wrongCredentials" class="flex flex-col text-center mt-3 select-none">
                                 <span class="text-red-500">Oops. You have entered wrong credentials</span>
                                 <span class="text-red-500">Please renter credentials</span>
                             </div>
-
-                            <button @click="usersignin" class="focus:outline-none text-2xl text-gray-200 border-gray-600 border-2 px-4 py-1 rounded-md mt-6">Sign In</button>
+                            <span class="inline mt-2"><input v-model="user.rememberMe"
+                                                             type="checkbox"> Remember Me</span>
+                            <button @click="usersignin"
+                                    class="focus:outline-none text-2xl text-gray-200 border-gray-600 border-2 px-4 py-1 rounded-md mt-6">
+                                Sign In
+                            </button>
                         </div>
                     </transition>
-
                 </div>
             </div>
         </div>
@@ -49,37 +55,31 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    var instance = axios.create({
-        baseURL: 'http://localhost:3000/',
-    });
-
     export default {
         name: "SignIn",
-        data(){
-          return{
-              userEmail: "",
-              userPassword: "",
-              wrongCredentials: false
-          }
+        data() {
+            return {
+                user: this.User(),
+                wrongCredentials: false,
+            }
         },
         methods: {
-            usersignin(){
-                this.wrongCredentials = false
-                instance.post('/user/login', {
-                    email: this.userEmail,
-                    password: this.userPassword
-                })
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .then(this.loggedIn)
-                    .catch(this.userPassIsWrong)
+            User() {
+                return {
+                    email: '',
+                    password: '',
+                    rememberMe: false
+                }
             },
-            userPassIsWrong(){
+            usersignin() {
+                console.log(this.user.rememberMe);
+                this.$store.dispatch('userSign', this.user)
+                    .then(this.user = this.User())
+            },
+            userPassIsWrong() {
                 this.wrongCredentials = true;
             },
-            loggedIn(){
+            loggedIn() {
                 this.$store.commit('LOGIN_USER');
             }
         },

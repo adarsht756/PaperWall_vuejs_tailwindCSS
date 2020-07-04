@@ -1,8 +1,7 @@
 <template>
     <div class="flex flex-col md:flex-row mt-10 mb-5 container mx-auto">
-
         <div class="flex flex-col mx-auto">
-            <div v-for="result in results.slice(0,7)" :key="result"
+            <div v-for="result in this.event.results.slice(0,7)" :key="result"
                  :id="result.id" class="md:m-3 mx-0 my-3 relative conta">
                 <div class="overflow-hidden" :style="{ background: result.color }">
                     <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
@@ -40,7 +39,7 @@
         </div>
 
         <div class="flex flex-col mx-auto">
-            <div v-for="result in results.slice(7,14)" :key="result"
+            <div v-for="result in this.event.results.slice(7,14)" :key="result"
                  class="md:m-3 mx-0 my-3 conta relative">
                 <div class="overflow-hidden" :style="{ background: result.color }">
                     <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
@@ -78,7 +77,7 @@
         </div>
 
         <div class="flex flex-col mx-auto">
-            <div v-for="result in results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta relative">
+            <div v-for="result in this.event.results.slice(14)" :key="result" class="md:m-3 mx-0 my-3 conta relative">
                 <div class="overflow-hidden" :style="{ background: result.color }">
                     <!--                         :style="{ height: ((400/result.width)*result.height)+'px' }"-->
                     <imageComp class="wall_image mx-auto h-full w-full transition-all transform duration-500"
@@ -118,40 +117,47 @@
 
 <script>
     import imageComp from "../components/image";
+    import {mapState} from 'vuex';
+
     export default {
         name: "WallpapersView",
         components: {
             imageComp,
         },
-        props: {
-            results: {
-                type: Array,
-                required: true
-            }
-        },
+        // props: {
+        //     results: {
+        //         type: Array,
+        //         required: true
+        //     }
+        // },
         data() {
             return {
                 appNameReferral: "?utm_source=Paperwall&utm_medium=referral",
                 unsplashLink: "https://unsplash.com/",
+                results: []
             }
         },
         methods: {
-            likeWallpaper(e){
-                if(!this.$store.state.userIsLoggedIn)
-                {
-                    console.log(this.$store.state.userIsLoggedIn);
+            likeWallpaper(e) {
+                if (!this.user.userIsLoggedIn) {
+                    console.log(this.user.userIsLoggedIn);
                     console.log("please login first")
-                }
-                else{
-                console.log(this.$store.state.userIsLoggedIn);
-                console.log(e);
+                } else {
+                    console.log(this.user.userIsLoggedIn);
+                    console.log(e);
                 }
             },
-            download(e){
-                this.$emit('download-image',e)
+            download(e) {
+                this.$store.dispatch('downloadPhoto', e)
             }
-        }
+        },
+        computed: {
+            ...mapState(['user', 'event'])
+        },
+        created() {
+            this.$store.commit('CHECK_ID', this.$route.params.key);
 
+        }
     }
 </script>
 

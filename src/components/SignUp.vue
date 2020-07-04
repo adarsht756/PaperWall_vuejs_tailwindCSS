@@ -1,6 +1,5 @@
 <template>
-    <div
-            class="py-2 h-screen w-screen bg-black text-white mr-10">
+    <div class="py-2 h-screen w-screen bg-black text-white mr-10">
         <router-link to="/">
             <button class="absolute right-0 mr-10 mt-3 focus:outline-none"
             >
@@ -29,15 +28,16 @@
                 <div id="view">
                     <transition name="slideRightSignup" mode="out-in">
                         <div class="px-10 mt-8 text-center">
-                            <input v-model="newUserFirstName" type="text" placeholder="Enter you first name"
+                            <input v-model="newUser.newUserFirstName" type="text" placeholder="Enter you first name"
                                    class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="newUserLastName" type="text" placeholder="Enter you last name"
+                            <input v-model="newUser.newUserLastName" type="text" placeholder="Enter you last name"
                                    class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="newUserEmail" type="email" placeholder="Enter Email"
+                            <input v-model="newUser.newUserEmail" type="email" placeholder="Enter Email"
                                    class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="newUserPassword" type="password" placeholder="Enter password"
+                            <input v-model="newUser.UserPassword" type="password" placeholder="Enter password"
                                    class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
-                            <input v-model="newUserConfirmPassword" type="password" placeholder="Confirm password" class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
+                            <input v-model="newUserConfirmPassword" type="password" placeholder="Confirm password"
+                                   class="pl-3 focus:outline-none my-2 border-b w-full placeholder-gray-400 bg-transparent text-2xl">
 
                             <div v-show="passDoNotMatch" class="flex flex-col text-center mt-3 select-none">
                                 <span class="text-red-500">Passwords do not match.</span>
@@ -59,45 +59,32 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    var instance = axios.create({
-        baseURL: 'http://localhost:3000/',
-    });
     export default {
         name: "SignUp",
         data() {
             return {
-                newUserEmail: "",
-                newUserPassword: "",
+                newUser: this.createNewUser,
                 newUserConfirmPassword: "",
-                newUserFirstName: "",
-                newUserLastName: "",
                 passDoNotMatch: false
             }
         },
         methods: {
-            addNewUser() {
-                if(this.newUserPassword !== this.newUserConfirmPassword){
-                    this.passDoNotMatch = true
+            createNewUser() {
+                return {
+                    newUserEmail: "",
+                    UserPassword: "",
+                    newUserFirstName: "",
+                    newUserLastName: "",
                 }
-                else{
+            },
+            addNewUser() {
+                if (this.newUser.UserPassword !== this.newUserConfirmPassword) {
+                    this.passDoNotMatch = true
+                } else {
                     this.passDoNotMatch = false
-                    instance.post('/user/register', {
-                        name: this.newUserFirstName + " " + this.newUserLastName,
-                        email: this.newUserEmail,
-                        password: this.newUserPassword
-                    })
-                        .then(function (response) {
-                            console.log(response);
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    this.newUserEmail = "";
-                    this.newUserPassword = "";
-                    this.newUserFirstName = "";
-                    this.newUserLastName = "";
-                    this.newUserConfirmPassword= "";
+                    this.$store.dispatch('userSignUp', this.newUser)
+                    this.newUser = this.createNewUser()
+                    this.newUserConfirmPassword = ''
                 }
             }
         }

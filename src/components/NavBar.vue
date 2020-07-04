@@ -33,14 +33,16 @@
             </div>
         </transition>
 
-        <nav class="flex flex-row justify-between md:justify-start h-16 md:h-auto bg-black text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
+        <nav class="flex flex-row justify-between md:justify-start h-16 md:h-auto bg-green-gradient text-white items-center px-3 md:px-10 py-1 md:py-3 fixed w-full top-0 z-30">
             <button class="text-2xl md:text-3xl gradient-text font-semibold focus:outline-none"
                     @click="getRandomPhotos">PaperWall
             </button>
 
             <div class="hidden lg:flex items-center justify-center ml-20">
                 <div class="mx-3" v-for="category in categories" :key="category">
-                    <button class="focus:outline-none" @click="searchCategory(category)">{{ category }}</button>
+                    <button class="focus:outline-none transition-colors duration-300 hover:text-gray-400"
+                            @click="searchCategory(category)">{{ category }}
+                    </button>
                 </div>
             </div>
 
@@ -64,7 +66,7 @@
                 <button class="ml-6 focus:outline-none">
                     <img class="h-8 border h-8 rounded-full object-cover"
                          src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=144&h=144&q=60"
-                         alt="">
+                         alt="Avatar">
                 </button>
             </div>
         </nav>
@@ -72,25 +74,30 @@
         <div v-show="loginSignupDialog">
             <div class="hidden md:block fixed top-0 mt-12 right-0 py-2 text-white mr-10 z-30 rounded-md"
                  style="background: #333333">
-                <div class="flex-col flex">
-                    <router-link to="/SignUp">
+                <div class="flex-col" :class="[ this.user.userIsLoggedIn ? 'hidden' : 'flex' ]">
+                    <router-link :to="{ name: 'SignUp' }">
                         <button class="w-full my-1 px-10 focus:outline-none">Sign
                             Up
                         </button>
                     </router-link>
-                    <router-link to="/SignIn">
+                    <router-link :to="{ name: 'SignIn' }">
                         <button class="w-full my-1 px-10 focus:outline-none">Sign
                             In
                         </button>
                     </router-link>
                 </div>
+                <div :class="[ this.user.userIsLoggedIn ? 'flex' : 'hidden' ]">
+                    <button class="w-full my-1 px-10 focus:outline-none" @click="logOut"> Log Out
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+
     export default {
         name: "NavBar",
         data() {
@@ -104,16 +111,33 @@
         },
         methods: {
             getRandomPhotos() {
-                this.$emit('getRandomPhotos',);
+                this.$store.dispatch('getRandomWallpapers')
             },
-            searchCategory(e) {
-                this.$emit('search-category', e, true, false)
+            searchCategory(key) {
+                document.body.scrollTop = 283.20001220703125;
+                let object = {
+                    searchedCategory: true,
+                    searchedPhoto: false,
+                    key: key
+                }
+                this.$store.dispatch('searchPhoto', object)
             },
-            searchPhoto(){
-                this.$emit('search-photo', this.searchKey, false, true)
-                this.searchKey = ""
+            searchPhoto() {
+                document.body.scrollTop = 283.20001220703125;
+                let object = {
+                    searchedCategory: false,
+                    searchedPhoto: true,
+                    key: this.searchKey
+                }
+                this.$store.dispatch('searchPhoto', object)
+            },
+            logOut() {
+                this.user.userIsLoggedIn = false;
+                this.loginSignupDialog = false;
+                localStorage.clear();
             }
-        }
+        },
+        computed: mapState(['user'])
     }
 </script>
 
