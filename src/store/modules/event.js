@@ -69,7 +69,6 @@ export const mutations = {
     },
     RESULT_LENGTH(state, val) {
         state.resultLength = val
-        console.log(state.resultLength)
     }
 }
 

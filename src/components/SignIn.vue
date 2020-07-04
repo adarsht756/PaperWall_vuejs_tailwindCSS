@@ -15,12 +15,12 @@
         <div class="mx-auto justify-between mt-32" style="width: 35%;">
             <div class="flex flex-col">
                 <div id="options" class="border-b py-3">
-                    <router-link to="/SignUp">
+                    <router-link :to="{ name: 'SignUp' }">
                         <button class="w-1/2 text-2xl border-r focus:outline-none">
                             Sign Up
                         </button>
                     </router-link>
-                    <router-link to="/SignIn">
+                    <router-link :to="{ name: 'SignIn' }">
                         <button class="w-1/2 text-2xl focus:outline-none">Sign In
                         </button>
                     </router-link>
