@@ -74,7 +74,7 @@
         <div v-show="loginSignupDialog">
             <div class="hidden md:block fixed top-0 mt-12 right-0 py-2 text-white mr-10 z-30 rounded-md"
                  style="background: #333333">
-                <div class="flex-col" :class="[ this.user.userIsLoggedIn ? 'hidden' : 'flex' ]">
+                <div id="in" class="flex-col" :class="[ userLog ? 'hidden' : 'flex' ]">
                     <router-link :to="{ name: 'SignUp' }">
                         <button class="w-full my-1 px-10 focus:outline-none">Sign
                             Up
@@ -86,7 +86,7 @@
                         </button>
                     </router-link>
                 </div>
-                <div :class="[ this.user.userIsLoggedIn ? 'flex' : 'hidden' ]">
+                <div id="out" :class="[ userLog ? 'flex' : 'hidden' ]">
                     <button class="w-full my-1 px-10 focus:outline-none" @click="logOut"> Log Out
                     </button>
                 </div>
@@ -134,10 +134,16 @@
             logOut() {
                 this.user.userIsLoggedIn = false;
                 this.loginSignupDialog = false;
-                localStorage.clear();
+                localStorage.keepUserLoggedIn = false;
+                document.getElementById("in").style.display = "flex";
+                document.getElementById("out").style.display = "none";
             }
         },
-        computed: mapState(['user'])
+        computed:{
+            userLog(){
+                return localStorage.keepUserLoggedIn
+            },
+            ...mapState(['user']) }
     }
 </script>
 
