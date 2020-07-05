@@ -1,7 +1,7 @@
 import axios from 'axios';
 import router from "../../router";
 var instance = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'https://paperwall-backend.herokuapp.com/',
 });
 
 export const state = {
@@ -24,16 +24,16 @@ export const actions = {
             email: user.email,
             password: user.password
         })
-            .then((response) => {
+            .then(() => {
                 commit('LOGIN_USER')
                 if (user.rememberMe) {
                     localStorage.keepUserLoggedIn = true
                 }
-                console.log(response)
+                // console.log(response)
             })
             .then(() => {
                 router.push({
-                    name: 'HomePage'
+                    name: '/Home'
                 })
             })
             .catch(error => {
@@ -46,9 +46,9 @@ export const actions = {
             email: user.newUserEmail,
             password: user.UserPassword
         })
-            .then(function (response) {
+            .then(() => {
                 commit('SIGN_UP')
-                console.log(response);
+                // console.log(response);
             })
             .catch(function (error) {
                 console.log(error.message);

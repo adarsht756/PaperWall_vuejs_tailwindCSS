@@ -1,6 +1,6 @@
 <template>
     <div class="py-2 h-screen w-screen bg-black text-white mr-10">
-        <router-link to="/">
+        <router-link :to="{ name: '/Home' }">
             <button class="absolute right-0 mr-10 mt-3 focus:outline-none"
             >
                 <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img"

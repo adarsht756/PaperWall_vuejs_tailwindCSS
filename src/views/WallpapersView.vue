@@ -52,7 +52,7 @@
                     <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
                             @click="download(result.links.download_location)"> Download
                     </button>
-                    <button class="like-btn z-10 text-white focus:outline-none">
+                    <button @click="likeWallpaper(result)" class="like-btn z-10 text-white focus:outline-none">
                         <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="heart-circle"
                              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"
                              class=w-6>
@@ -89,7 +89,7 @@
                     <button class="px-4 py-2 bg-gray-700 text-white rounded-t-md middle z-10 focus:outline-none"
                             @click="download(result.links.download_location)"> Download
                     </button>
-                    <button class="like-btn z-10 text-white focus:outline-none">
+                    <button @click="likeWallpaper(result)" class="like-btn z-10 text-white focus:outline-none">
                         <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="heart-circle"
                              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"
                              class=w-6>
@@ -124,12 +124,6 @@
         components: {
             imageComp,
         },
-        // props: {
-        //     results: {
-        //         type: Array,
-        //         required: true
-        //     }
-        // },
         data() {
             return {
                 appNameReferral: "?utm_source=Paperwall&utm_medium=referral",
@@ -140,10 +134,9 @@
         methods: {
             likeWallpaper(e) {
                 if (!this.user.userIsLoggedIn) {
-                    console.log(this.user.userIsLoggedIn);
+                    document.getElementById("loginError").style.display = 'flex';
                     console.log("please login first")
                 } else {
-                    console.log(this.user.userIsLoggedIn);
                     console.log(e);
                 }
             },

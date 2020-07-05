@@ -2,6 +2,8 @@
     <div>
         <NetworkProblem :networkProb="networkProb"/>
 
+        <LoginError/>
+
         <NavBar/>
 
         <PaperWallDescAndSearch/>
@@ -19,12 +21,14 @@
     import pagination from "../components/pagination";
     import PaperWallDescAndSearch from "../components/PaperWallDescAndSearch";
     import NetworkProblem from "../components/NetworkProblem";
+    import LoginError from "../components/LoginError";
     import {mapState} from 'vuex';
 
     export default {
         name: "homePage",
         components: {
-            NavBar, PaperWallDescAndSearch, NetworkProblem, pagination
+            NavBar, PaperWallDescAndSearch, NetworkProblem, pagination,
+            LoginError
         },
         data() {
             return {

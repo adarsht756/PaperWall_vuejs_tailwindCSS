@@ -77,7 +77,6 @@ export const actions = {
         apiclient.get("https://api.unsplash.com/photos/?client_id=sWZyXuW6Bvu-O5mUTYaTc4kwfr9PhkS47pZhWiaHB8M&utm_source=Paperwall&utm_medium=referral&per_page=21")
             .then((response) => {
                 commit('SET_EVENTS', response.data)
-                console.log(response.data.length)
                 commit('RESULT_LENGTH', response.data.length)
             })
             .catch(error => {
